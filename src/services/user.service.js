@@ -6,6 +6,11 @@ const getByEmail = async (email) => {
   return user;
 };
 
+const createUser = ({
+  displayName, email, password, image,
+}) => User.create({ displayName, email, password, image });
+
 module.exports = {
   getByEmail,
+  createUser,
 };
