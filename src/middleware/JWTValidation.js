@@ -9,8 +9,10 @@ const jwtValidation = (req, res, next) => {
         message: 'Token not found',
       });
     }
+
+    const extractedAuthorization = authorization.split(' ')[1];
   
-    const payload = getPayload(authorization);
+    const payload = getPayload(extractedAuthorization);
     req.payload = payload;
 
     next();
