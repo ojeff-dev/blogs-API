@@ -8,6 +8,8 @@ const getByEmail = async (email) => {
   return user;
 };
 
+const getById = (userId) => User.findByPk(userId, { attributes: { exclude: ['password'] } });
+
 const createUser = ({
   displayName, email, password, image,
 }) => User.create({ displayName, email, password, image });
@@ -15,5 +17,6 @@ const createUser = ({
 module.exports = {
   getUsers,
   getByEmail,
+  getById,
   createUser,
 };
