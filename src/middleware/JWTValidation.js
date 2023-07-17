@@ -1,5 +1,15 @@
 const { getPayload } = require('../utils/handleToken');
 
+const handleAuthorization = (authorization) => {
+  const extractedAuthorization = authorization.split(' ');
+
+  if (extractedAuthorization.length > 1) {
+    return extractedAuthorization[1];
+  }
+
+  return extractedAuthorization[0];
+};
+
 const jwtValidation = (req, res, next) => {
   try {
     const { authorization } = req.headers;
@@ -10,9 +20,7 @@ const jwtValidation = (req, res, next) => {
       });
     }
 
-    const extractedAuthorization = authorization.split(' ')[1];
-  
-    const payload = getPayload(extractedAuthorization);
+    const payload = getPayload(handleAuthorization(authorization));
     req.payload = payload;
 
     next();
