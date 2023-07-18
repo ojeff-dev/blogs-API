@@ -8,6 +8,8 @@ const route = express.Router();
 
 route.get('/', tokenValidation, PostController.getBlogPosts);
 
+route.get('/:id', tokenValidation, PostController.getBlogPostById);
+
 route.post('/', tokenValidation, checkTheFields, PostController.createBlogPost);
 
 module.exports = route;
