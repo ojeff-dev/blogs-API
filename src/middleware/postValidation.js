@@ -1,4 +1,4 @@
-const { CategoryService } = require('../services');
+const { CategoryService, PostService } = require('../services');
 
 const checkTheFields = async (req, res, next) => {
   const { title, content, categoryIds } = req.body;
@@ -22,6 +22,29 @@ const checkTheFields = async (req, res, next) => {
   return next();
 };
 
+const PUTValidations = async (req, res, next) => {
+  const { data } = req.payload;
+  const { id } = req.params;
+
+  const userId = data.id;
+  const post = await PostService.getBlogPostById(id);
+
+  if (!post) return res.status(404).json({ message: 'Post does not exist' });
+  
+  if (post.userId !== userId) {
+    return res.status(401).json({ message: 'Unauthorized user' });
+  }
+
+  const { title, content } = req.body;
+
+  if (!title || !content) {
+    return res.status(400).json({ message: 'Some required fields are missing' });
+  }
+
+  return next();
+};
+
 module.exports = {
   checkTheFields,
+  PUTValidations,
 };
