@@ -14,9 +14,12 @@ const createUser = ({
   displayName, email, password, image,
 }) => User.create({ displayName, email, password, image });
 
+const removeUser = (userId) => User.destroy({ where: { id: userId } });
+
 module.exports = {
   getUsers,
   getByEmail,
   getById,
   createUser,
+  removeUser,
 };

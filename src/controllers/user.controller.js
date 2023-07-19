@@ -45,8 +45,24 @@ const createUser = async (req, res) => {
   }
 };
 
+const removeUser = async (req, res) => {
+  try {
+    const { data } = req.payload;
+    const userId = data.id;
+
+    const isRemoved = await UserService.removeUser(userId);
+
+    if (isRemoved > 0) return res.sendStatus(204);
+
+    return res.status(404).json({ message: 'User not found' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getUsers,
   getByUserId,
   createUser,
+  removeUser,
 };

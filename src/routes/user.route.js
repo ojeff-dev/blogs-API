@@ -15,6 +15,8 @@ route.get('/', tokenValidation, UserController.getUsers);
 
 route.get('/:id', tokenValidation, UserController.getByUserId);
 
+route.delete('/me', tokenValidation, UserController.removeUser);
+
 route.post(
   '/',
   displayNameValidation,
