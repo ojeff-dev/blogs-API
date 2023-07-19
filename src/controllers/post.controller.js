@@ -67,10 +67,22 @@ const removeBlogPost = async (req, res) => {
   }
 };
 
+const searchTermInBlogPost = async (req, res) => {
+  try {
+    const { q } = req.query;
+    const results = await PostService.searchTermInBlogPost(q);
+
+    return res.status(200).json(results);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   createBlogPost,
   getBlogPosts,
   getBlogPostById,
   updateBlogPost,
   removeBlogPost,
+  searchTermInBlogPost,
 };

@@ -12,6 +12,8 @@ const route = express.Router();
 
 route.get('/', tokenValidation, PostController.getBlogPosts);
 
+route.get('/search', tokenValidation, PostController.searchTermInBlogPost);
+
 route.get('/:id', tokenValidation, PostController.getBlogPostById);
 
 route.post('/', tokenValidation, checkTheFields, PostController.createBlogPost);
