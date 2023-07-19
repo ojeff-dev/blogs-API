@@ -51,9 +51,26 @@ const updateBlogPost = async (req, res) => {
   }
 };
 
+const removeBlogPost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { data } = req.payload;
+    const userId = data.id;
+  
+    const isRemoved = await PostService.removeBlogPost(id, userId);
+  
+    if (isRemoved > 0) {
+      return res.sendStatus(204);
+    }
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   createBlogPost,
   getBlogPosts,
   getBlogPostById,
   updateBlogPost,
+  removeBlogPost,
 };

@@ -44,7 +44,24 @@ const PUTValidations = async (req, res, next) => {
   return next();
 };
 
+const DELETEValidation = async (req, res, next) => {
+  const { data } = req.payload;
+  const { id } = req.params;
+
+  const userId = data.id;
+  const post = await PostService.getBlogPostById(id);
+
+  if (!post) return res.status(404).json({ message: 'Post does not exist' });
+  
+  if (post.userId !== userId) {
+    return res.status(401).json({ message: 'Unauthorized user' });
+  }
+
+  return next();
+};
+
 module.exports = {
   checkTheFields,
   PUTValidations,
+  DELETEValidation,
 };
